@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weather</title>
+<!-- Don't forget to link to jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<style>
+	input{
+		margin: 10px 0px;
+		padding: 5px;
+	}
+	/*Use CSS to make forecast not appear initially, then Jquery (later) to reveal again*/
+	#forecast{
+		display: none;
+	}
+	#forecast div{
+		width: 25vw;
+		border: 8px solid blue;
+		margin: 0 auto;
+		background: black;
+	}
+	img{
+		width:100%;
+	}
+</style>
+<script>
+    function gettingJSON(){
+    	 
+    	// Check for Unit input
+    	if (!$('input[name=temp]:checked').val()) {
+    		var units = "Imperial";
+    	}
+    	else {
+    		var units = $('input[name=temp]:checked').val();
+    	}
+
+    	// Check for City input
+    	if ($("#location").val() == 0) {
+    		var q_city = "Ann Arbor";
+    	}
+    	else{
+    		var q_city = $("#location").val();
+    	}
+
+    	// API Query Set Up
+    	var YourWeatherAppID = 'bb2c54359e1fee4787db7ef6d401de42';
+		let query = "http://api.openweathermap.org/data/2.5/weather?q=" + q_city + "&units=" + units + "&APPID=" + YourWeatherAppID;
+        console.log("Query is: " + query);
+         
+         // Perform the Query and update variables
+        $.getJSON(query,function(json){
+            console.log(JSON.stringify(json));
+            var current_temp = json.main.temp;
+            var temp_max = json.main.temp_max;
+            var temp_min = json.main.temp_min;
+            var icon_l = ("http://openweathermap.org/img/wn/" + json.weather[0].icon + ".png");
+            var desc = json.weather[0].main;
+            $('#loc').text(q_city);
+            $('#temp').text(current_temp);
+            $('#high').text(temp_max);
+            $('#low').text(temp_min);
+            $('#tempImg').attr('src', icon_l);
+            $('#tempImg').attr('alt', desc);
+
+            // Make the div appear
+            $('#forecast').show();
+
+        })
+    }
+
+    </script>
+</head>
+<body>
+	<!-- DO NOT CHANGE ANY CODE IN THE BODY OF THIS FILE. -->
+	<label for ="location">City:</label><input type = "text" id = "location"><br>
+	<input type = "radio" name = "temp" value = "imperial" id = "fahrenheit"> <label for = "fahrenheit">Fahrenheit</label><br>
+	<input type = "radio" name = "temp" value = "metric" id = "celcius"> <label for = "celcius">Celcius</label><br>
+
+	<button id = "getIt" onclick = " gettingJSON()">Get Weather</button>
+
+
+	<div id = "forecast">
+		<div>
+		<img id = "tempImg" src="" alt = "" title = "">
+		</div>
+		<p>The temperature in <span id = "loc"></span> is currently <span id = "temp"></span>.</p>
+		<p>The high today will be <span id = "high"></span> and the low will be <span id = "low"></span>.</p>
+		
+	</div>
+</body>
+</html>
