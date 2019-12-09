@@ -3,7 +3,7 @@
 <head>
 <title>Weather</title>
 <!-- Don't forget to link to jQuery -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
 	input{
@@ -45,7 +45,7 @@
 
     	// API Query Set Up
     	var YourWeatherAppID = 'bb2c54359e1fee4787db7ef6d401de42';
-		let query = "http://api.openweathermap.org/data/2.5/weather?q=" + q_city + "&units=" + units + "&APPID=" + YourWeatherAppID;
+		let query = "https://api.openweathermap.org/data/2.5/weather?q=" + q_city + "&units=" + units + "&APPID=" + YourWeatherAppID;
         console.log("Query is: " + query);
          
          // Perform the Query and update variables
@@ -54,7 +54,7 @@
             var current_temp = json.main.temp;
             var temp_max = json.main.temp_max;
             var temp_min = json.main.temp_min;
-            var icon_l = ("http://openweathermap.org/img/wn/" + json.weather[0].icon + ".png");
+            var icon_l = ("https://openweathermap.org/img/wn/" + json.weather[0].icon + ".png");
             var desc = json.weather[0].main;
             $('#loc').text(q_city);
             $('#temp').text(current_temp);
